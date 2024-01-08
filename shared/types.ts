@@ -10,7 +10,7 @@ export type TMovie = {
   title: string;
   fullplot: string;
   languages: string[];
-  released: Date;
+  released: string;
   directors: string[];
   rated: string;
   awards: {
