@@ -1,24 +1,30 @@
 import { TMovie } from "../../../../shared/types";
 import { formatDate } from "../../common/date-util";
 
-class MovieRow extends HTMLElement {
-  constructor(public movie: TMovie | undefined) {
+class MovieRow extends HTMLTableRowElement {
+  private _movie: TMovie | undefined;
+
+  constructor() {
     super();
+    this._movie = undefined;
+  }
+
+  set movie(value: TMovie) {
+    this._movie = value;
     this.render();
   }
 
   render() {
-    if (!this.movie) return;
-    this.innerHTML = `
-      <tr>
-        <td>${this.movie.title}</td>
-        <td>${formatDate(new Date(this.movie.released))}</td>
-        <td>${this.movie.imdb.rating}</td>
+    if (this._movie) {
+      this.innerHTML = `
+        <td>${this._movie.title}</td>
+        <td>${formatDate(new Date(this._movie.released))}</td>
+        <td>${this._movie.imdb.rating}</td>
         <td>
-          <a href="/movies/${this.movie._id}">Edit</a>
+          <a href="/movies/${this._movie._id}">Edit</a>
         </td>
-      </tr>
-    `;
+      `;
+    }
   }
 }
 

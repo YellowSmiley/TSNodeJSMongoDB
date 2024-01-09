@@ -11,4 +11,4 @@ customElements.define("not-found-page", NotFoundPage);
 customElements.define("home-page", HomePage);
 
 customElements.define("movies-page", MoviesPage);
-customElements.define("movie-row", MovieRow);
+customElements.define("movie-row", MovieRow, { extends: "tr" });

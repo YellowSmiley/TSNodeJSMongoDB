@@ -71,14 +71,14 @@ class MoviesPage extends HTMLElement {
   renderMovies() {
     const tbody = this.shadowRoot?.querySelector("tbody");
     if (!tbody) return;
-    tbody.innerHTML = ""; // Clear the tbody
+    tbody.innerHTML = "";
     if (this.movies.length === 0) {
       tbody.innerHTML = "<tr><td>No movies found</td></tr>";
       return;
     }
 
     this.movies.forEach((movie) => {
-      const row = document.createElement("movie-row") as MovieRow;
+      const row = document.createElement("tr", { is: "movie-row" }) as MovieRow;
       row.movie = movie;
       tbody.appendChild(row);
     });
