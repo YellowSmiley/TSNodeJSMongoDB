@@ -22,7 +22,7 @@ template.innerHTML = `
 
   <div>
     <h1>Movies</h1>
-    <p>A list of movies.</p>
+    <p>A list of movies which have create, read, update and delete actions on.</p>
     <table>
       <thead>
         <tr>
