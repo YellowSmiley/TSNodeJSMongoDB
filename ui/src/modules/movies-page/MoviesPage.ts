@@ -11,12 +11,28 @@ template.innerHTML = `
       border-collapse: collapse;
       width: 100%;
     }
+    tbody {
+      max-height: 400px;
+      overflow-y: scroll;
+    }
     th, td {
       text-align: left;
       padding: 8px;
     }
     tr:nth-child(even) {
       background-color: #f2f2f2;
+    }
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+    .pagination button {
+      padding: 0.5rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #fff;
+      cursor: pointer;
     }
   </style>
 
@@ -35,13 +51,18 @@ template.innerHTML = `
       <tbody>
       </tbody>
     </table>
+    <div class="pagination">
+      <button id="prevPageBtn">Previous</button>
+      <span>Page: <span id="page">1</span></span>
+      <button id="nextPageBtn">Next</button>
+    </div>
   </div>
 `;
 
 class MoviesPage extends HTMLElement {
   private movies: TMovie[] = [];
   private page = 1;
-  private limit = 10;
+  private limit = 20;
 
   constructor() {
     super();
@@ -51,6 +72,7 @@ class MoviesPage extends HTMLElement {
 
   connectedCallback() {
     this.fetchData();
+    this.setupPagination();
   }
 
   async fetchData() {
@@ -82,6 +104,28 @@ class MoviesPage extends HTMLElement {
       row.movie = movie;
       tbody.appendChild(row);
     });
+  }
+
+  setupPagination() {
+    const prevPageBtn = this.shadowRoot?.getElementById("prevPageBtn");
+    const nextPageBtn = this.shadowRoot?.getElementById("nextPageBtn");
+    const page = this.shadowRoot?.getElementById("page");
+
+    if (prevPageBtn && nextPageBtn && page) {
+      prevPageBtn.addEventListener("click", () => {
+        if (this.page > 1) {
+          this.page--;
+          page.textContent = this.page.toString();
+          this.fetchData();
+        }
+      });
+
+      nextPageBtn.addEventListener("click", () => {
+        this.page++;
+        page.textContent = this.page.toString();
+        this.fetchData();
+      });
+    }
   }
 }
 
