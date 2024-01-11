@@ -67,6 +67,16 @@ app.get("/movies", async (req, res) => {
   }
 });
 
+app.get("/movies/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const movie = await moviesCollection.findOne({ _id: new ObjectId(id) });
+    res.send(movie);
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // Update
 app.put("/movies/:id", async (req, res) => {
   try {
